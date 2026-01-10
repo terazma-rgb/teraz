@@ -206,7 +206,7 @@ class StockCalculator extends HTMLElement {
             <style>${StockCalculator.styles}</style>
             ${this.template}
         `;
-        this.addEventListeners();
+        setTimeout(() => this.addEventListeners(), 0);
     }
 
     addEventListeners() {
