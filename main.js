@@ -110,6 +110,7 @@ class StockCalculator extends HTMLElement {
             .result-item {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
             }
 
             .result-item .label {
