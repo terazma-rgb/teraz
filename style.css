@@ -16,15 +16,26 @@ body {
     background-color: var(--background-color);
     background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
     display: flex;
+    flex-direction: column; /* Align content vertically */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
 }
 
-main {
+header, main, article, footer {
     width: 100%;
     max-width: 500px;
+    box-sizing: border-box;
+}
+
+header {
+    padding: 1rem 0;
+    margin-bottom: 0; /* Adjust as h1 has margin */
+}
+
+main {
+    margin-bottom: 1.5rem;
 }
 
 stock-calculator {
@@ -37,18 +48,48 @@ stock-calculator {
     transition: all 0.3s ease;
 }
 
-main h1 {
-    color: var(--card-background-color); /* Light color for contrast with dark body background */
+header h1 {
+    color: var(--card-background-color);
     text-align: center;
-    margin-top: 0; /* Remove default top margin */
-    margin-bottom: 1.5rem; /* Add some space below the title */
+    margin-top: 0;
+    margin-bottom: 0;
 }
+
+article, footer {
+    background-color: var(--card-background-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+article h2 {
+    color: var(--primary-color-dark);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+article p {
+    line-height: 1.7;
+    color: var(--text-color);
+}
+
+footer {
+    background-color: transparent;
+    box-shadow: none;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
 
 @media (max-width: 600px) {
     body {
         padding: 10px;
     }
-    stock-calculator {
+    stock-calculator, article {
         padding: 1.5rem;
     }
 }

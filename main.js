@@ -1,9 +1,12 @@
+import { content } from './content.js';
+
 class StockCalculator extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.currency = 'KRW'; // Default currency
         this.render();
+        this.loadContent();
     }
 
     static get styles() {
@@ -145,16 +148,7 @@ class StockCalculator extends HTMLElement {
             }
         `;
     }
-
-    getCurrencySymbol() {
-        switch(this.currency) {
-            case 'KRW': return '₩';
-            case 'USD': return '$';
-            case 'JPY': return '¥';
-            default: return '';
-        }
-    }
-
+    
     get template() {
         return `
             <div class="tabs">
@@ -212,17 +206,54 @@ class StockCalculator extends HTMLElement {
         `;
     }
 
+    getCurrencySymbol() {
+        switch(this.currency) {
+            case 'KRW': return '₩';
+            case 'USD': return '$';
+            case 'JPY': return '¥';
+            default: return '';
+        }
+    }
+
+    debounce(func, delay = 300) {
+        let timeout;
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    }
+
+    loadContent() {
+        const articleContainer = document.getElementById('content-container');
+        const footerContainer = document.getElementById('footer-container');
+        
+        if (articleContainer) {
+            let articleHtml = `<h2>${content.article.title}</h2>`;
+            content.article.paragraphs.forEach(p => {
+                articleHtml += `<p>${p}</p>`;
+            });
+            articleContainer.innerHTML = articleHtml;
+        }
+
+        if (footerContainer) {
+            footerContainer.innerHTML = `<p>${content.footer.disclaimer}</p>`;
+        }
+    }
+
     render() {
         this.shadowRoot.innerHTML = `
             <style>${StockCalculator.styles}</style>
             ${this.template}
         `;
-        setTimeout(() => this.addEventListeners(), 0);
+        this.addEventListeners();
     }
 
     addEventListeners() {
+        const debouncedCalculate = this.debounce(() => this.calculate());
         this.shadowRoot.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => this.calculate());
+            input.addEventListener('input', debouncedCalculate);
         });
         
         this.shadowRoot.querySelectorAll('.tab').forEach(tab => {
@@ -234,8 +265,24 @@ class StockCalculator extends HTMLElement {
 
     switchCurrency(newCurrency) {
         if (this.currency === newCurrency) return;
+        
+        // Preserve values
+        const currentShares = this.shadowRoot.getElementById('current-shares').value;
+        const currentAvgPrice = this.shadowRoot.getElementById('current-avg-price').value;
+        const additionalShares = this.shadowRoot.getElementById('additional-shares').value;
+        const additionalPrice = this.shadowRoot.getElementById('additional-price').value;
+
         this.currency = newCurrency;
-        this.render(); // Re-render to update currency symbols and reset inputs
+        this.render();
+
+        // Restore values
+        this.shadowRoot.getElementById('current-shares').value = currentShares;
+        this.shadowRoot.getElementById('current-avg-price').value = currentAvgPrice;
+        this.shadowRoot.getElementById('additional-shares').value = additionalShares;
+        this.shadowRoot.getElementById('additional-price').value = additionalPrice;
+        
+        // Recalculate with new currency formatting
+        this.calculate();
     }
 
     calculate() {
@@ -263,13 +310,9 @@ class StockCalculator extends HTMLElement {
         const formatOptions = {
             style: 'currency',
             currency: this.currency,
-            minimumFractionDigits: (isUSD || this.currency === 'JPY') ? 0 : 0, // JPY usually no decimals
-            maximumFractionDigits: (isUSD || this.currency === 'JPY') ? 0 : 0
+            minimumFractionDigits: isUSD ? 2 : 0,
+            maximumFractionDigits: isUSD ? 2 : 0
         };
-        if (isUSD) {
-            formatOptions.minimumFractionDigits = 2;
-            formatOptions.maximumFractionDigits = 2;
-        }
 
         const formatter = new Intl.NumberFormat('ko-KR', formatOptions);
         
