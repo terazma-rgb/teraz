@@ -15,8 +15,25 @@ body {
     font-family: var(--font-family);
     background-color: var(--background-color);
     background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+}
+
+header h1 {
+    color: var(--card-background-color);
+    text-align: center;
+    margin: 0;
 }
 
 .site-wrapper {
@@ -34,14 +51,9 @@ body {
     gap: 1.5rem;
 }
 
-header, main, article, footer {
+main, article {
     width: 100%;
     box-sizing: border-box;
-}
-
-header {
-    padding: 1rem 0;
-    margin-bottom: 0;
 }
 
 stock-calculator {
@@ -54,14 +66,7 @@ stock-calculator {
     transition: all 0.3s ease;
 }
 
-header h1 {
-    color: var(--card-background-color);
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-article, footer {
+article {
     background-color: var(--card-background-color);
     border-radius: 12px;
     box-shadow: var(--shadow);
@@ -80,26 +85,21 @@ article p {
     color: var(--text-color);
 }
 
-footer {
-    background-color: transparent;
-    box-shadow: none;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.85rem;
-    color: #ccc;
-    grid-column: 1 / -1; /* Make footer span both columns */
-}
-
 .sidebar {
     position: sticky;
     top: 20px;
-    height: 600px; /* Adjust as needed */
 }
 
-.tradingview-widget-container {
-    height: 100%;
+footer {
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #ccc;
 }
-
 
 @media (max-width: 1024px) {
     .site-wrapper {
@@ -107,7 +107,6 @@ footer {
     }
     .sidebar {
         position: static;
-        height: 500px; /* Adjust height for stacked layout */
         margin-top: 1rem;
     }
 }
@@ -115,6 +114,9 @@ footer {
 @media (max-width: 600px) {
     body {
         padding: 10px;
+    }
+    header {
+        margin-bottom: 1rem;
     }
     stock-calculator, article {
         padding: 1.5rem;
