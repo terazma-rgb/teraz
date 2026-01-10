@@ -37,6 +37,13 @@ stock-calculator {
     transition: all 0.3s ease;
 }
 
+main h1 {
+    color: var(--card-background-color); /* Light color for contrast with dark body background */
+    text-align: center;
+    margin-top: 0; /* Remove default top margin */
+    margin-bottom: 1.5rem; /* Add some space below the title */
+}
+
 @media (max-width: 600px) {
     body {
         padding: 10px;
