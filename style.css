@@ -15,27 +15,33 @@ body {
     font-family: var(--font-family);
     background-color: var(--background-color);
     background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-    display: flex;
-    flex-direction: column; /* Align content vertically */
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
 }
 
+.site-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 header, main, article, footer {
     width: 100%;
-    max-width: 500px;
     box-sizing: border-box;
 }
 
 header {
     padding: 1rem 0;
-    margin-bottom: 0; /* Adjust as h1 has margin */
-}
-
-main {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
 }
 
 stock-calculator {
@@ -60,7 +66,6 @@ article, footer {
     border-radius: 12px;
     box-shadow: var(--shadow);
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
 }
 
 article h2 {
@@ -82,8 +87,30 @@ footer {
     padding: 1rem;
     font-size: 0.85rem;
     color: #ccc;
+    grid-column: 1 / -1; /* Make footer span both columns */
 }
 
+.sidebar {
+    position: sticky;
+    top: 20px;
+    height: 600px; /* Adjust as needed */
+}
+
+.tradingview-widget-container {
+    height: 100%;
+}
+
+
+@media (max-width: 1024px) {
+    .site-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        position: static;
+        height: 500px; /* Adjust height for stacked layout */
+        margin-top: 1rem;
+    }
+}
 
 @media (max-width: 600px) {
     body {

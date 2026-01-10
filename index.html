@@ -9,14 +9,70 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
 <body>
-    <header>
-        <h1>주식 물타기 계산기</h1>
-    </header>
-    <main>
-        <stock-calculator></stock-calculator>
-    </main>
-    <article id="content-container"></article>
-    <footer id="footer-container"></footer>
+    <div class="site-wrapper">
+        <div class="main-content">
+            <header>
+                <h1>주식 물타기 계산기</h1>
+            </header>
+            <main>
+                <stock-calculator></stock-calculator>
+            </main>
+            <article id="content-container"></article>
+            <footer id="footer-container"></footer>
+        </div>
+        
+        <aside class="sidebar">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                {
+                    "colorTheme": "light",
+                    "dateRange": "12M",
+                    "showChart": true,
+                    "locale": "kr",
+                    "largeChartUrl": "",
+                    "isTransparent": false,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": false,
+                    "width": "100%",
+                    "height": "100%",
+                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                    "plotLineColorFalling": "rgba(255, 74, 104, 1)",
+                    "gridLineColor": "rgba(240, 243, 250, 0)",
+                    "scaleFontColor": "rgba(106, 109, 120, 1)",
+                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorFalling": "rgba(255, 74, 104, 0.12)",
+                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                    "belowLineFillColorFallingBottom": "rgba(255, 74, 104, 0)",
+                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                    "tabs": [
+                        {
+                            "title": "지수",
+                            "symbols": [
+                                { "s": "KRX:KOSPI", "d": "코스피" },
+                                { "s": "SP:SPX", "d": "S&P 500" },
+                                { "s": "NIKKEI225", "d": "Nikkei 225" }
+                            ],
+                            "originalTitle": "Indices"
+                        },
+                        {
+                            "title": "환율",
+                            "symbols": [
+                                { "s": "FX_IDC:USDKRW", "d": "원/달러" },
+                                { "s": "FX_IDC:JPYKRW", "d": "원/엔" },
+                                { "s": "FX:USDJPY", "d": "달러/엔" }
+                            ],
+                            "originalTitle": "Forex"
+                        }
+                    ]
+                }
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+        </aside>
+    </div>
 
     <script src="content.js" type="module"></script>
     <script src="main.js" type="module"></script>
