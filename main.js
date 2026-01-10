@@ -145,11 +145,21 @@ class StockCalculator extends HTMLElement {
         `;
     }
 
+    getCurrencySymbol() {
+        switch(this.currency) {
+            case 'KRW': return '₩';
+            case 'USD': return '$';
+            case 'JPY': return '¥';
+            default: return '';
+        }
+    }
+
     get template() {
         return `
             <div class="tabs">
                 <button class="tab ${this.currency === 'KRW' ? 'active' : ''}" data-currency="KRW">한국 주식 (KRW)</button>
                 <button class="tab ${this.currency === 'USD' ? 'active' : ''}" data-currency="USD">미국 주식 (USD)</button>
+                <button class="tab ${this.currency === 'JPY' ? 'active' : ''}" data-currency="JPY">일본 주식 (JPY)</button>
             </div>
             <div class="calculator">
                 <div class="input-group">
@@ -161,7 +171,7 @@ class StockCalculator extends HTMLElement {
                 <div class="input-group">
                     <label for="current-avg-price">현재 평균 단가</label>
                      <div class="input-wrapper">
-                        <span class="currency-symbol">${this.currency === 'KRW' ? '₩' : '$'}</span>
+                        <span class="currency-symbol">${this.getCurrencySymbol()}</span>
                         <input type="number" id="current-avg-price" placeholder="예: 50000">
                     </div>
                 </div>
@@ -174,7 +184,7 @@ class StockCalculator extends HTMLElement {
                 <div class="input-group">
                     <label for="additional-price">추가 매수 단가</label>
                     <div class="input-wrapper">
-                        <span class="currency-symbol">${this.currency === 'KRW' ? '₩' : '$'}</span>
+                        <span class="currency-symbol">${this.getCurrencySymbol()}</span>
                         <input type="number" id="additional-price" placeholder="예: 40000">
                     </div>
                 </div>
@@ -248,12 +258,18 @@ class StockCalculator extends HTMLElement {
     }
 
     displayResult(finalAvgPrice, totalShares, totalInvestment) {
+        const isUSD = this.currency === 'USD';
         const formatOptions = {
             style: 'currency',
             currency: this.currency,
-            minimumFractionDigits: this.currency === 'USD' ? 2 : 0,
-            maximumFractionDigits: this.currency === 'USD' ? 2 : 0
+            minimumFractionDigits: (isUSD || this.currency === 'JPY') ? 0 : 0, // JPY usually no decimals
+            maximumFractionDigits: (isUSD || this.currency === 'JPY') ? 0 : 0
         };
+        if (isUSD) {
+            formatOptions.minimumFractionDigits = 2;
+            formatOptions.maximumFractionDigits = 2;
+        }
+
         const formatter = new Intl.NumberFormat('ko-KR', formatOptions);
         
         this.shadowRoot.getElementById('final-avg-price').textContent = finalAvgPrice > 0 ? formatter.format(finalAvgPrice) : '-';
