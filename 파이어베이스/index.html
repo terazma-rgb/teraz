@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="주식 물타기 계산기로 평균 매수 단가와 총 투자금을 미리 계산하여 현명한 투자 전략을 세워보세요. 물타기 전략의 장단점과 활용법을 알아보고, 안정적인 투자를 계획하세요.">
+    <title>주식 물타기 계산기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+</head>
+<body>
+    <header>
+        <h1>주식 물타기 계산기</h1>
+    </header>
+
+    <div class="site-wrapper">
+        <div class="main-content">
+            <main>
+                <stock-calculator></stock-calculator>
+            </main>
+            <article id="content-container"></article>
+        </div>
+        
+        <aside class="sidebar">
+            <div id="tradingview-widget-container-1" class="tradingview-widget-container" style="margin-bottom: 2rem;"></div>
+
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-ticker.js" async>
+                {
+                  "symbols": [
+                    { "description": "원/달러", "proName": "FX_IDC:USDKRW" },
+                    { "description": "원/엔", "proName": "FX_IDC:JPYKRW" },
+                    { "description": "달러/엔", "proName": "FX:USDJPY" }
+                  ],
+                  "colorTheme": "dark",
+                  "isTransparent": true,
+                  "locale": "kr"
+                }
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+        </aside>
+    </div>
+    <footer id="footer-container"></footer>
+
+    <script src="content.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+</body>
+</html>

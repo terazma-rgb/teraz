@@ -1,0 +1,529 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    font-weight: 400;
+}
+
+/* Background with Luxury Executive Office */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/luxury-office-bg.jpg') center center/cover no-repeat;
+    z-index: -2;
+    filter: brightness(0.7) contrast(1.1);
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: -1;
+}
+
+/* Header - Ultra minimal */
+.header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #000;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.logo i {
+    color: #666;
+    font-size: 1.6rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: #888;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.exchange-rate-display {
+    margin-top: 1rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.rate-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.currency-label {
+    font-weight: 500;
+    color: #666;
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+}
+
+.currency-value {
+    font-weight: 600;
+    color: #000;
+    font-family: 'Inter', monospace;
+    font-size: 1.1rem;
+}
+
+.currency-change {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #888;
+}
+
+
+/* Main Container */
+.main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Calculator Wrapper - Ultra minimal glass */
+.calculator-wrapper {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(40px);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Tabs - Ultra minimal */
+.tabs {
+    display: flex;
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    border: none;
+    background: transparent;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tab-btn:hover {
+    background: rgba(0, 0, 0, 0.02);
+    color: #333;
+}
+
+.tab-btn.active {
+    background: transparent;
+    color: #000;
+    border-bottom: 1px solid #000;
+    font-weight: 500;
+}
+
+.tab-btn i {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 2.5rem;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Calculator Section - Ultra minimal */
+.calculator-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #000;
+    margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Calculator Section */
+.calculator-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Input Grid - Ultra minimal */
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Input Group - Ultra minimal */
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    color: #666;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: transparent;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-bottom-color: #000;
+    box-shadow: none;
+}
+
+.input-group input::placeholder {
+    color: #bbb;
+    font-weight: 300;
+}
+
+/* Calculate Button - Ultra minimal */
+.calculate-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem auto 0;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-size: 0.85rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.calculate-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Results Section - Ultra minimal */
+.results-section {
+    display: none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(30px);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Summary Cards - Ultra minimal */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.summary-card {
+    background: transparent;
+    border-radius: 0;
+    padding: 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: none;
+    border: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.summary-card:last-child {
+    border-right: none;
+}
+
+.summary-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.summary-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    background: transparent;
+}
+
+.summary-card.primary .summary-icon {
+    color: #000;
+}
+
+.summary-card.secondary .summary-icon {
+    color: #666;
+}
+
+.summary-card.tertiary .summary-icon {
+    color: #888;
+}
+
+.summary-content h3 {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #888;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.summary-change {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 300;
+}
+
+.summary-desc {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 300;
+}
+
+/* Results Grid - Ultra minimal */
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 0;
+}
+
+.result-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0;
+    padding: 2rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    transition: none;
+}
+
+.result-card:first-child {
+    border-left: none;
+}
+
+.result-card h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #666;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item .label {
+    font-weight: 400;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.result-item .value {
+    font-weight: 400;
+    color: #000;
+    font-size: 1rem;
+}
+
+.result-item .value.positive {
+    color: #333;
+}
+
+.result-item .value.negative {
+    color: #666;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0 1rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .main-container {
+        padding: 0 1rem;
+    }
+    
+    .calculator-wrapper {
+        border-radius: 0;
+    }
+    
+    .tabs {
+        flex-direction: column;
+    }
+    
+    .tab-btn {
+        padding: 1.2rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .tab-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.1rem;
+    }
+    
+    .input-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-card {
+        border-left: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .result-card:last-child {
+        border-bottom: none;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+    }
+    
+    .summary-card:last-child {
+        border-bottom: none;
+    }
+}
