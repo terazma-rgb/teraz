@@ -185,8 +185,14 @@ function calculate() {
     if (currentMode === 'target') {
         const targetAvg = parseFloat(document.getElementById('target-avg-price').value) || 0;
         targetActionCard.style.display = 'flex';
-        document.getElementById('target-price-val').textContent = `${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        document.getElementById('target-shares-val').textContent = additionalShares.toLocaleString();
+        
+        // Update the HTML content directly for better formatting
+        const actionTitle = targetActionCard.querySelector('.action-title');
+        actionTitle.innerHTML = `
+            목표 평단 <span id="target-price-val">${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}</span> 달성을 위해<br>
+            <span class="action-highlight">${currency}${additionalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}에 ${additionalShares.toLocaleString()}주</span>를<br>
+            더 매수해야 합니다.
+        `;
     } else {
         targetActionCard.style.display = 'none';
     }
