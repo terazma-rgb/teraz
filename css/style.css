@@ -120,6 +120,13 @@ body::before {
     color: #888;
 }
 
+.currency-change.positive {
+    color: #d32f2f; /* Red for rise in KRW/USD context usually means USD got stronger, but stock market red is usually down. For exchange rate, red often means up in Korea. */
+}
+
+.currency-change.negative {
+    color: #1976d2; /* Blue for fall */
+}
 
 /* Main Container */
 .main-container {
@@ -152,7 +159,7 @@ body::before {
     padding: 1.5rem 1rem;
     border: none;
     background: transparent;
-    font-size: 0.85rem;
+    font-size: 1.1rem; /* Increased font size */
     font-weight: 400;
     color: #888;
     cursor: pointer;
@@ -160,7 +167,7 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.8rem; /* Increased gap */
     border-bottom: 1px solid transparent;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -178,9 +185,9 @@ body::before {
     font-weight: 500;
 }
 
-.tab-btn i {
-    font-size: 1rem;
-    opacity: 0.7;
+.tab-btn i, .tab-btn span {
+    font-size: 1.4rem; /* Increased icon size */
+    opacity: 1; /* Make flags fully visible */
 }
 
 /* Tab Content */
@@ -199,7 +206,7 @@ body::before {
 }
 
 .section-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* Increased */
     font-weight: 300;
     color: #000;
     margin-bottom: 2rem;
@@ -218,17 +225,17 @@ body::before {
 .input-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: 2.5rem; /* Increased gap */
     margin-bottom: 2.5rem;
 }
 
 /* Input Group - Ultra minimal */
 .input-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 400;
+    margin-bottom: 0.6rem;
+    font-weight: 500; /* Bolder */
     color: #666;
-    font-size: 0.8rem;
+    font-size: 0.95rem; /* Increased */
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -239,7 +246,7 @@ body::before {
     border: none;
     border-bottom: 1px solid #ddd;
     border-radius: 0;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increased */
     transition: all 0.3s ease;
     background: transparent;
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
@@ -263,13 +270,13 @@ body::before {
     width: 100%;
     max-width: 300px;
     margin: 2rem auto 0;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2rem; /* Larger padding */
     background: transparent;
     color: #000;
     border: 1px solid #000;
     border-radius: 0;
-    font-size: 0.85rem;
-    font-weight: 400;
+    font-size: 1rem; /* Increased */
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -317,10 +324,10 @@ body::before {
 .summary-card {
     background: transparent;
     border-radius: 0;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem; /* Increased padding */
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem; /* Increased gap */
     transition: none;
     border: none;
     border-right: 1px solid rgba(0, 0, 0, 0.05);
@@ -336,13 +343,13 @@ body::before {
 }
 
 .summary-icon {
-    width: 40px;
-    height: 40px;
+    width: 48px; /* Increased */
+    height: 48px; /* Increased */
     border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increased */
     flex-shrink: 0;
     background: transparent;
 }
@@ -360,7 +367,7 @@ body::before {
 }
 
 .summary-content h3 {
-    font-size: 0.8rem;
+    font-size: 0.9rem; /* Increased */
     font-weight: 400;
     color: #888;
     margin-bottom: 0.5rem;
@@ -369,21 +376,21 @@ body::before {
 }
 
 .summary-value {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Increased */
     font-weight: 300;
     color: #000;
     line-height: 1;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
 }
 
 .summary-change {
-    font-size: 0.75rem;
+    font-size: 0.85rem; /* Increased */
     color: #666;
     font-weight: 300;
 }
 
 .summary-desc {
-    font-size: 0.75rem;
+    font-size: 0.85rem; /* Increased */
     color: #999;
     font-weight: 300;
 }
@@ -399,7 +406,7 @@ body::before {
 .result-card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 0;
-    padding: 2rem;
+    padding: 2.5rem; /* Increased padding */
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     transition: none;
 }
@@ -409,10 +416,10 @@ body::before {
 }
 
 .result-card h3 {
-    font-size: 0.9rem;
+    font-size: 1rem; /* Increased */
     font-weight: 400;
     color: #666;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-align: center;
@@ -422,7 +429,7 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 0;
+    padding: 1rem 0; /* Increased padding */
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -433,13 +440,13 @@ body::before {
 .result-item .label {
     font-weight: 400;
     color: #888;
-    font-size: 0.85rem;
+    font-size: 0.95rem; /* Increased */
 }
 
 .result-item .value {
     font-weight: 400;
     color: #000;
-    font-size: 1rem;
+    font-size: 1.1rem; /* Increased */
 }
 
 .result-item .value.positive {
@@ -484,7 +491,7 @@ body::before {
     
     .tab-btn {
         padding: 1.2rem 1rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
     .tab-content {
