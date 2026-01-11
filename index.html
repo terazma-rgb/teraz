@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>물타기 계산기 - 미국주식 & 한국주식</title>
+    <title>Stock Pro - 전문 투자자용 물타기 계산기</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -18,14 +19,20 @@
     <header class="header">
         <div class="header-content">
             <h1 class="logo">
-                <i class="fas fa-chart-line"></i>
-                물타기 계산기
+                <i class="fas fa-chart-pie"></i>
+                STOCK PRO
             </h1>
-            <p class="subtitle">전문가용 투자 분석 도구</p>
+            <p class="subtitle">Advanced Averaging Calculator</p>
+            
             <div id="exchange-rate" class="exchange-rate-display" title="제공되는 환율 정보의 마지막 업데이트 시각이며, 사용자의 현재 위치 시간으로 표시됩니다.">
-                <span class="currency-change" id="usd-krw-change"></span>
+                <div class="rate-header">
+                    <span class="currency-change" id="usd-krw-change"></span>
+                    <button id="refresh-rate-btn" class="refresh-btn" title="환율 새로고침">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
                 <div class="rate-info">
-                    <span class="currency-label">USD/KRW:</span>
+                    <span class="currency-label">USD/KRW</span>
                     <span class="currency-value" id="usd-krw-rate">loading...</span>
                 </div>
             </div>
@@ -34,210 +41,199 @@
 
     <main class="main-container">
         <div class="calculator-wrapper">
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="us-stock">
-                    <span class="fi fi-us"></span>
-                    미국주식
-                </button>
-                <button class="tab-btn" data-tab="kr-stock">
-                    <span class="fi fi-kr"></span>
-                    한국주식
-                </button>
-            </div>
-
-            <!-- 미국주식 계산기 -->
-            <div class="tab-content active" id="us-stock">
-                <div class="calculator-section">
-                    <h2 class="section-title">미국주식 물타기 계산</h2>
-                    
-                    <div class="input-grid">
-                        <div class="input-group">
-                            <label for="us-current-shares">현재 보유 수량 (주)</label>
-                            <input type="number" id="us-current-shares" placeholder="예: 100" step="1">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="us-current-price">현재 평균 단가 ($)</label>
-                            <input type="number" id="us-current-price" placeholder="예: 150.50" step="0.01">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="us-market-price">현재 시가 ($)</label>
-                            <input type="number" id="us-market-price" placeholder="예: 120.00" step="0.01">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="us-additional-shares">추가 매수 수량 (주)</label>
-                            <input type="number" id="us-additional-shares" placeholder="예: 50" step="1">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="us-additional-price">추가 매수 희망가 ($)</label>
-                            <input type="number" id="us-additional-price" placeholder="예: 100.00" step="0.01">
-                        </div>
-
-                    </div>
-                    
-                    <button class="calculate-btn" onclick="calculateUSStock()">
-                        <i class="fas fa-calculator"></i>
-                        계산하기
-                    </button>
+            <!-- Settings Bar -->
+            <div class="settings-bar">
+                <div class="input-item stock-name-input">
+                    <i class="fas fa-tag"></i>
+                    <input type="text" id="stock-name" placeholder="종목명 (선택사항, 예: TSLA)">
+                </div>
+                <div class="toggle-item">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="include-fees">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">수수료 포함 (0.25%)</span>
                 </div>
             </div>
 
-            <!-- 한국주식 계산기 -->
-            <div class="tab-content" id="kr-stock">
-                <div class="calculator-section">
-                    <h2 class="section-title">한국주식 물타기 계산</h2>
-                    
-                    <div class="input-grid">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="us-stock">
+                    <span class="fi fi-us"></span>
+                    미국주식 ($)
+                </button>
+                <button class="tab-btn" data-tab="kr-stock">
+                    <span class="fi fi-kr"></span>
+                    한국주식 (₩)
+                </button>
+            </div>
+
+            <!-- 계산기 입력 폼 (공통 사용, 통화 기호만 변경) -->
+            <div class="calculator-section">
+                
+                <div class="input-grid">
+                    <!-- 보유 주식 섹션 -->
+                    <div class="section-group">
+                        <h3><i class="fas fa-wallet"></i> 현재 보유 자산</h3>
                         <div class="input-group">
-                            <label for="kr-current-shares">현재 보유 수량 (주)</label>
-                            <input type="number" id="kr-current-shares" placeholder="예: 100" step="1">
+                            <label>보유 수량</label>
+                            <input type="number" id="current-shares" placeholder="0" step="1">
                         </div>
-                        
                         <div class="input-group">
-                            <label for="kr-current-price">현재 평균 단가 (₩)</label>
-                            <input type="number" id="kr-current-price" placeholder="예: 150,000" step="100">
+                            <label>평균 단가</label>
+                            <input type="number" id="current-price" placeholder="0" step="0.01">
                         </div>
-                        
                         <div class="input-group">
-                            <label for="kr-market-price">현재 시가 (₩)</label>
-                            <input type="number" id="kr-market-price" placeholder="예: 120,000" step="100">
+                            <label>현재 시장가</label>
+                            <input type="number" id="market-price" placeholder="0" step="0.01">
                         </div>
+                    </div>
+
+                    <!-- 추가 매수 섹션 -->
+                    <div class="section-group">
+                        <h3><i class="fas fa-cart-plus"></i> 추가 매수 계획</h3>
                         
-                        <div class="input-group">
-                            <label for="kr-additional-shares">추가 매수 수량 (주)</label>
-                            <input type="number" id="kr-additional-shares" placeholder="예: 50" step="1">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="kr-additional-price">추가 매수 희망가 (₩)</label>
-                            <input type="number" id="kr-additional-price" placeholder="예: 100,000" step="100">
+                        <!-- 탭형 서브 메뉴: 직접 입력 vs 역계산 -->
+                        <div class="calc-mode-tabs">
+                            <button class="mode-btn active" onclick="setCalcMode('manual')">수량 직접 입력</button>
+                            <button class="mode-btn" onclick="setCalcMode('target')">목표 평단 역계산</button>
                         </div>
 
+                        <div id="mode-manual" class="mode-content active">
+                            <div class="input-group">
+                                <label>추가 매수 수량</label>
+                                <input type="number" id="additional-shares" placeholder="0" step="1">
+                            </div>
+                            <div class="input-group">
+                                <label>매수 희망가</label>
+                                <input type="number" id="additional-price" placeholder="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div id="mode-target" class="mode-content">
+                            <div class="input-group highlight">
+                                <label>목표 평균 단가</label>
+                                <input type="number" id="target-avg-price" placeholder="희망하는 평단가 입력" step="0.01">
+                            </div>
+                            <div class="input-group">
+                                <label>매수 희망가 (현재가)</label>
+                                <input type="number" id="target-buy-price" placeholder="0" step="0.01">
+                            </div>
+                            <p class="help-text">목표 평단을 맞추기 위해 필요한 주식 수를 계산합니다.</p>
+                        </div>
                     </div>
-                    
-                    <button class="calculate-btn" onclick="calculateKRStock()">
-                        <i class="fas fa-calculator"></i>
-                        계산하기
+                </div>
+
+                <!-- 고급 옵션 (환율 등) -->
+                <div class="advanced-options">
+                    <div class="input-group" id="orig-rate-group" style="display: none;">
+                        <label>최초 매수 시 환율 (선택: 환차손익 계산용)</label>
+                        <input type="number" id="original-exchange-rate" placeholder="미입력시 현재 환율 적용">
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="reset-btn" onclick="resetCalculator()">
+                        <i class="fas fa-undo"></i> 초기화
+                    </button>
+                    <button class="calculate-btn" onclick="calculate()">
+                        <i class="fas fa-calculator"></i> 분석 실행
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- 계산 결과 -->
+        <!-- 결과 대시보드 -->
         <div class="results-section" id="results" style="display: none;">
-            <div class="results-header">
-                <h2>투자 분석 결과</h2>
-                <button class="close-btn" onclick="hideResults()">
-                    <i class="fas fa-times"></i>
+            <div class="results-toolbar">
+                <h2><i class="fas fa-poll"></i> 투자 분석 리포트</h2>
+                <button class="save-btn" onclick="saveAsImage()">
+                    <i class="fas fa-download"></i> 이미지 저장
                 </button>
             </div>
-            
-            <!-- 핵심 지표 요약 -->
-            <div class="summary-cards">
-                <div class="summary-card primary">
-                    <div class="summary-icon">
-                        <i class="fas fa-chart-line"></i>
+
+            <div id="capture-area" class="capture-container">
+                <!-- 1. 핵심 요약 카드 -->
+                <div class="insight-banner">
+                    <div class="insight-item">
+                        <span class="insight-label">평단가 변화</span>
+                        <div class="insight-value-group">
+                            <span class="old-value" id="res-old-avg">-</span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="new-value" id="res-new-avg">-</span>
+                        </div>
+                        <span class="insight-change badge" id="res-avg-change">-</span>
                     </div>
-                    <div class="summary-content">
-                        <h3>손익 개선</h3>
-                        <div class="summary-value" id="improvement-display">-</div>
-                        <div class="summary-change" id="improvement-change">-</div>
+                    <div class="insight-item">
+                        <span class="insight-label">필요 투자금</span>
+                        <span class="main-value" id="res-required-cost">-</span>
+                        <span class="sub-value" id="res-required-cost-krw" style="display:none">-</span>
                     </div>
+                </div>
+
+                <!-- 2. 차트 영역 -->
+                <div class="charts-container">
+                    <div class="chart-box">
+                        <h4><i class="fas fa-chart-pie"></i> 포트폴리오 비중</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="weightChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-box">
+                        <h4><i class="fas fa-ruler-vertical"></i> 평단가 위치 분석</h4>
+                        <div class="chart-wrapper">
+                            <canvas id="positionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 상세 데이터 그리드 -->
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">📊 물타기 효과</div>
+                        <div class="row">
+                            <span>총 보유 수량</span>
+                            <strong id="res-total-shares">-</strong>
+                        </div>
+                        <div class="row">
+                            <span>총 투자 원금</span>
+                            <strong id="res-total-invest">-</strong>
+                        </div>
+                        <div class="row" id="row-krw-total" style="display:none">
+                            <span>원화 환산 총액</span>
+                            <strong id="res-total-invest-krw">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <div class="card-header">🛡 리스크 & 목표</div>
+                        <div class="row">
+                            <span>현재 손익률</span>
+                            <strong id="res-current-return">-</strong>
+                        </div>
+                        <div class="row">
+                            <span>예상 손익률 (물타기 후)</span>
+                            <strong id="res-new-return">-</strong>
+                        </div>
+                        <div class="row">
+                            <span>원금 회복까지</span>
+                            <strong id="res-recovery-rate" class="highlight">-</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. 시나리오 -->
+                <div class="scenario-box">
+                    <h4>💡 수익 시나리오</h4>
+                    <p id="scenario-text">주가가 이전 평단가 도달 시 ...</p>
                 </div>
                 
-                <div class="summary-card secondary">
-                    <div class="summary-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="summary-content">
-                        <h3>신규 평균단가</h3>
-                        <div class="summary-value" id="avg-price-display">-</div>
-                        <div class="summary-desc">물타기 후</div>
-                    </div>
-                </div>
-                
-                <div class="summary-card tertiary">
-                    <div class="summary-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="summary-content">
-                        <h3>손절가</h3>
-                        <div class="summary-value" id="stop-loss-display">-</div>
-                        <div class="summary-desc">리스크 관리</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 상세 분석 -->
-            <div class="results-grid">
-                <div class="result-card">
-                    <h3>현재 상황 분석</h3>
-                    <div class="result-item">
-                        <span class="label">총 보유 수량:</span>
-                        <span class="value" id="total-shares-before">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">평균 단가:</span>
-                        <span class="value" id="avg-price-before">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">현재 손익:</span>
-                        <span class="value" id="current-pl">-</span>
-                    </div>
-                    <div class="result-item" id="krw-converted-before" style="display: none;">
-                        <span class="label">원화 환산액:</span>
-                        <span class="value" id="total-value-krw-before">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">수익률:</span>
-                        <span class="value" id="current-return">-</span>
-                    </div>
-                </div>
-
-                <div class="result-card">
-                    <h3>물타기 후 분석</h3>
-                    <div class="result-item">
-                        <span class="label">총 보유 수량:</span>
-                        <span class="value" id="total-shares-after">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">신규 평균 단가:</span>
-                        <span class="value" id="avg-price-after">-</span>
-                    </div>
-                    <div class="result-item" id="krw-converted-after" style="display: none;">
-                        <span class="label">원화 환산액:</span>
-                        <span class="value" id="total-value-krw-after">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">손절가:</span>
-                        <span class="value" id="stop-loss">-</span>
-                    </div>
-                </div>
-
-                <div class="result-card">
-                    <h3>투자 인사이트</h3>
-                    <div class="result-item">
-                        <span class="label">총 투자금:</span>
-                        <span class="value" id="total-investment">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">회복까지 필요한 상승률:</span>
-                        <span class="value" id="recovery-rate">-</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="label">손익 개선:</span>
-                        <span class="value" id="improvement">-</span>
-                    </div>
-                </div>
+                <div class="watermark">Stock Pro Calculator</div>
             </div>
         </div>
     </main>
 
     <footer class="footer">
-        <p>&copy; 2024 주식 물타기 계산기. 투자에 대한 모든 책임은 투자자 본인에게 있습니다.</p>
+        <p>&copy; 2024 Stock Pro. Investment tools for professionals.</p>
     </footer>
 
     <script src="js/dashboard.js"></script>

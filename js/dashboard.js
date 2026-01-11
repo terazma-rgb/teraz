@@ -1,3 +1,5 @@
+// Dashboard Logic (Exchange Rate)
+
 async function fetchExchangeRate() {
     try {
         const response = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -22,14 +24,15 @@ async function fetchExchangeRate() {
                 const hours = String(lastUpdate.getHours()).padStart(2, '0');
                 const minutes = String(lastUpdate.getMinutes()).padStart(2, '0');
                 
-                changeElement.textContent = `환율 업데이트: ${year}-${month}-${day} ${hours}:${minutes} (현지 시간)`;
-                changeElement.style.color = '#888';
+                changeElement.textContent = `기준: ${year}-${month}-${day} ${hours}:${minutes}`;
             }
+            return true;
         }
     } catch (error) {
         console.error('Exchange rate fetch error:', error);
         const rateElement = document.getElementById('usd-krw-rate');
         if (rateElement) rateElement.textContent = '연결 실패';
+        return false;
     }
 }
 
@@ -38,3 +41,6 @@ document.addEventListener('DOMContentLoaded', fetchExchangeRate);
 
 // Refresh every 5 minutes
 setInterval(fetchExchangeRate, 300000);
+
+// Expose to window for calculator.js
+window.fetchExchangeRate = fetchExchangeRate;
