@@ -22,7 +22,7 @@ async function fetchExchangeRate() {
                 const hours = String(lastUpdate.getHours()).padStart(2, '0');
                 const minutes = String(lastUpdate.getMinutes()).padStart(2, '0');
                 
-                changeElement.textContent = `${year}-${month}-${day} ${hours}:${minutes} 기준`;
+                changeElement.textContent = `환율 업데이트: ${year}-${month}-${day} ${hours}:${minutes} (현지 시간)`;
                 changeElement.style.color = '#888';
             }
         }
