@@ -180,6 +180,17 @@ function calculate() {
 
     // 4. Update UI
     
+    // Target Action Card (Specific to Target Mode)
+    const targetActionCard = document.getElementById('res-target-action');
+    if (currentMode === 'target') {
+        const targetAvg = parseFloat(document.getElementById('target-avg-price').value) || 0;
+        targetActionCard.style.display = 'flex';
+        document.getElementById('target-price-val').textContent = `${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        document.getElementById('target-shares-val').textContent = additionalShares.toLocaleString();
+    } else {
+        targetActionCard.style.display = 'none';
+    }
+
     // Banner
     document.getElementById('res-old-avg').textContent = `${currency}${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     document.getElementById('res-new-avg').textContent = `${currency}${avgPriceAfter.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;

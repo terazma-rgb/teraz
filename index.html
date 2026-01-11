@@ -152,6 +152,20 @@
             </div>
 
             <div id="capture-area" class="capture-container">
+                <!-- 0. 목표 달성 가이드 (역계산 시 노출) -->
+                <div class="target-action-card" id="res-target-action" style="display: none;">
+                    <div class="action-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="action-info">
+                        <p class="action-label">목표 달성 실행 계획</p>
+                        <h2 class="action-title">
+                            목표 평단 <span id="target-price-val"></span> 달성을 위해<br>
+                            <span class="action-highlight"><span id="target-shares-val">0</span>주</span>를 더 매수해야 합니다.
+                        </h2>
+                    </div>
+                </div>
+
                 <!-- 1. 핵심 요약 카드 -->
                 <div class="insight-banner">
                     <div class="insight-item">
