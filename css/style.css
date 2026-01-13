@@ -106,16 +106,8 @@ body::before {
 }
 
 /* Exchange Rate Display */
-.exchange-rate-display {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--glass-border);
-}
+/* Moved to Settings Bar section */
+
 
 .rate-header {
     display: flex;
@@ -182,11 +174,45 @@ body::before {
 /* Settings Bar */
 .settings-bar {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    flex-direction: column;
+    gap: 0; /* Remove gap as items are hidden or minimal */
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--glass-border);
+    align-items: center;
+}
+
+/* Quick Price Buttons */
+.quick-price-buttons {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.q-btn {
+    flex: 1;
+    min-width: 60px;
+    background: rgba(56, 189, 248, 0.1); /* Subtle accent tint */
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    color: var(--accent-color);
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.q-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);
+}
+
+.q-btn:active {
+    transform: translateY(0);
 }
 
 .input-item {
@@ -404,6 +430,33 @@ input:checked + .slider:before {
 .input-group.highlight input {
     border-color: var(--accent-color);
     background: rgba(56, 189, 248, 0.05);
+}
+
+/* Quick Price Buttons */
+.quick-price-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.q-btn {
+    flex: 1;
+    min-width: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.2rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.q-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 .help-text {
@@ -725,14 +778,88 @@ input:checked + .slider:before {
     margin-top: 3rem;
 }
 
-/* Responsive */
+/* Responsive Optimization */
 @media (max-width: 768px) {
-    .calculator-wrapper, .capture-container {
-        padding: 1.5rem;
+    .header {
+        padding: 1rem 0;
     }
     
-    .insight-banner {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .main-container {
+        padding: 0 1rem 2rem;
+    }
+
+    .calculator-wrapper, .capture-container {
+        padding: 1.2rem;
+        border-radius: 12px;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 1.2rem;
+    }
+
+    .section-group {
+        padding: 1.2rem;
+    }
+
+    /* Target Action Card Mobile */
+    .target-action-card {
+        padding: 1.5rem;
+        gap: 1rem;
         flex-direction: column;
+        text-align: center;
+    }
+
+    .action-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .action-title {
+        font-size: 1.2rem;
+    }
+
+    .action-highlight {
+        font-size: 1.8rem;
+        display: block; /* Force new line for the big number */
+        margin: 0.5rem 0;
+    }
+
+    /* Results */
+    .insight-item {
+        padding: 1.2rem;
+        min-width: 100%;
+    }
+
+    .main-value {
+        font-size: 1.5rem;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-wrapper {
+        height: 180px;
+    }
+
+    .data-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .calculate-btn, .reset-btn {
+        width: 100%;
     }
 }
 

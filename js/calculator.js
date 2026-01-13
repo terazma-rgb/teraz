@@ -9,6 +9,7 @@ let currentTab = 'us-stock'; // 'us-stock' or 'kr-stock'
 document.addEventListener('DOMContentLoaded', function() {
     setupTabs();
     setupInputs();
+    loadSavedData(); // Load saved data on startup
     
     // Refresh button listener
     document.getElementById('refresh-rate-btn').addEventListener('click', function() {
@@ -31,6 +32,7 @@ function setupTabs() {
             btn.classList.add('active');
             currentTab = btn.getAttribute('data-tab');
             updateCurrencyLabels();
+            saveData(); // Save tab state
         });
     });
 }
@@ -38,10 +40,13 @@ function setupTabs() {
 function setCalcMode(mode) {
     currentMode = mode;
     document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.mode-btn[onclick="setCalcMode('${mode}')"]`).classList.add('active');
+    const modeBtn = document.querySelector(`.mode-btn[onclick="setCalcMode('${mode}')"]`);
+    if (modeBtn) modeBtn.classList.add('active');
     
     document.querySelectorAll('.mode-content').forEach(content => content.classList.remove('active'));
-    document.getElementById(`mode-${mode}`).classList.add('active');
+    const modeContent = document.getElementById(`mode-${mode}`);
+    if (modeContent) modeContent.classList.add('active');
+    saveData(); // Save mode state
 }
 
 function updateCurrencyLabels() {
@@ -58,13 +63,82 @@ function updateCurrencyLabels() {
 }
 
 function setupInputs() {
-    // Auto-calculate on Enter key
-    const inputs = document.querySelectorAll('input[type="number"]');
+    // Auto-calculate on Enter key and Save on input
+    const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') calculate();
         });
+        input.addEventListener('input', saveData);
     });
+}
+
+function saveData() {
+    const data = {
+        currentShares: document.getElementById('current-shares').value,
+        currentPrice: document.getElementById('current-price').value,
+        marketPrice: document.getElementById('market-price').value,
+        additionalShares: document.getElementById('additional-shares').value,
+        additionalPrice: document.getElementById('additional-price').value,
+        targetAvgPrice: document.getElementById('target-avg-price').value,
+        targetBuyPrice: document.getElementById('target-buy-price').value,
+        originalExchangeRate: document.getElementById('original-exchange-rate').value,
+        currentTab: currentTab,
+        currentMode: currentMode
+    };
+    localStorage.setItem('stockProData', JSON.stringify(data));
+}
+
+function loadSavedData() {
+    const savedData = localStorage.getItem('stockProData');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        if (data.currentShares) document.getElementById('current-shares').value = data.currentShares;
+        if (data.currentPrice) document.getElementById('current-price').value = data.currentPrice;
+        if (data.marketPrice) document.getElementById('market-price').value = data.marketPrice;
+        if (data.additionalShares) document.getElementById('additional-shares').value = data.additionalShares;
+        if (data.additionalPrice) document.getElementById('additional-price').value = data.additionalPrice;
+        if (data.targetAvgPrice) document.getElementById('target-avg-price').value = data.targetAvgPrice;
+        if (data.targetBuyPrice) document.getElementById('target-buy-price').value = data.targetBuyPrice;
+        if (data.originalExchangeRate) document.getElementById('original-exchange-rate').value = data.originalExchangeRate;
+        
+        if (data.currentTab) {
+            currentTab = data.currentTab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-tab') === currentTab);
+            });
+            updateCurrencyLabels();
+        }
+        
+        if (data.currentMode) {
+            setCalcMode(data.currentMode);
+        }
+    }
+}
+
+function applyQuickPrice(targetId, dropPercent) {
+    const marketPrice = parseFloat(document.getElementById('market-price').value) || 0;
+    if (marketPrice <= 0) {
+        alert("먼저 현재 시장가(현재가)를 입력해주세요.");
+        return;
+    }
+    
+    let targetPrice = marketPrice * (1 + dropPercent);
+    
+    // Round based on price level (simple rule)
+    if (targetPrice > 100) targetPrice = Math.round(targetPrice * 100) / 100;
+    else targetPrice = Math.round(targetPrice * 1000) / 1000;
+
+    const input = document.getElementById(targetId);
+    input.value = targetPrice;
+    
+    // Add a small highlight effect
+    input.style.backgroundColor = 'rgba(56, 189, 248, 0.2)';
+    setTimeout(() => {
+        input.style.backgroundColor = '';
+    }, 500);
+    
+    saveData(); // Save the new price
 }
 
 function getExchangeRate() {
@@ -339,6 +413,7 @@ function renderCharts(oldShares, newShares, oldAvg, newAvg, marketPrice, currenc
 
 function resetCalculator() {
     document.querySelectorAll('input').forEach(input => input.value = '');
+    localStorage.removeItem('stockProData'); // Clear saved data
     document.getElementById('results').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
