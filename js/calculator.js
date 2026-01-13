@@ -44,7 +44,20 @@ const langPack = {
         rowRecovery: "원금 회복까지",
         scenTitle: "💡 수익 시나리오",
         actionText: "목표 평단 <span id='target-price-val'>{0}</span> 달성을 위해<br><span class='action-highlight'>{1}에 {2}주</span>를<br>더 매수해야 합니다.",
-        scenText: "주가가 기존 평단가(<strong>{0}</strong>)까지 회복 시<br>예상 수익금: <strong style='color: #4ade80'>{1}</strong> (수익률 {2}%)"
+        scenText: "주가가 기존 평단가(<strong>{0}</strong>)까지 회복 시<br>예상 수익금: <strong style='color: #4ade80'>{1}</strong> (수익률 {2}%)",
+        // Guide Section
+        guideTitle: "📈 주식 물타기 계산기 100% 활용 가이드",
+        guideIntro: "성공적인 투자를 위해서는 체계적인 자금 관리와 전략적인 분할 매수가 필수적입니다. Stock Pro 물타기 계산기는 단순한 수치 계산을 넘어, 투자자가 합리적인 의사결정을 내릴 수 있도록 돕는 전문 분석 도구입니다.",
+        whatIsTitle: "물타기(Dollar Cost Averaging)란?",
+        whatIsDesc: "주가가 하락했을 때 추가 매수를 통해 평균 단가를 낮추는 투자 전략입니다. 이를 통해 향후 주가가 반등할 때 손실을 더 빠르게 만회하고, 수익 전환 시점을 앞당길 수 있습니다. 하지만 무분별한 물타기는 '깡통 계좌'의 지름길이 될 수 있으므로, 철저한 계산과 비중 관리가 선행되어야 합니다.",
+        featureTitle: "Stock Pro의 차별화된 기능",
+        feat1: "목표 평단 역계산: '내 평단을 $150까지 낮추려면 몇 주를 사야 할까?'라는 질문에 명확한 답을 제시합니다.",
+        feat2: "이중 통화 지원: 미국 주식 투자 시 필수적인 실시간 환율을 반영하여, 원화(KRW) 기준의 정확한 투자 규모를 파악할 수 있습니다.",
+        feat3: "시각적 리스크 분석: 현재 주가와 내 평단의 괴리율을 시각화된 차트로 제공하여 객관적인 상황 인식을 돕습니다.",
+        adviceTitle: "투자 조언 및 주의사항",
+        adviceDesc: "분할 매수는 하락장에서 강력한 무기가 될 수 있지만, 펀더멘털이 훼손된 기업에 대해서는 신중해야 합니다. 추가 매수 전에 반드시 해당 기업의 실적, 재무 건전성, 그리고 시장의 모멘텀을 다시 한번 확인하시기 바랍니다. 또한, 전체 포트폴리오에서 특정 종목의 비중이 과도하게 커지지 않도록 리스크 관리에 만전을 기하십시오.",
+        disclaimerTitle: "⚠️ 면책 조항 (Disclaimer)",
+        disclaimerDesc: "본 서비스가 제공하는 계산 결과와 데이터는 투자 참고용이며, 그 정확성이나 완전성을 보장하지 않습니다. 환율 변동, 증권사 수수료 정책, 시장 상황 등에 따라 실제 결과와 차이가 발생할 수 있습니다. 모든 투자의 최종 책임은 투자자 본인에게 있으며, Stock Pro는 본 도구 사용으로 인한 어떠한 손실에 대해서도 책임을 지지 않습니다."
     },
     en: {
         mainTitle: "Stock Averaging Calculator",
@@ -83,7 +96,20 @@ const langPack = {
         rowRecovery: "Break-even at",
         scenTitle: "💡 Scenario",
         actionText: "To reach avg price <span id='target-price-val'>{0}</span>,<br>you need to buy <span class='action-highlight'>{2} shares at {1}</span>.",
-        scenText: "If price returns to old avg (<strong>{0}</strong>),<br>Expected Profit: <strong style='color: #4ade80'>{1}</strong> ({2}%)"
+        scenText: "If price returns to old avg (<strong>{0}</strong>),<br>Expected Profit: <strong style='color: #4ade80'>{1}</strong> ({2}%)",
+        // Guide Section
+        guideTitle: "📈 Guide to Stock Averaging (DCA)",
+        guideIntro: "Successful investing requires systematic capital management and strategic dip buying. Stock Pro is a professional analysis tool that helps investors make rational decisions beyond simple calculations.",
+        whatIsTitle: "What is Dollar Cost Averaging (DCA)?",
+        whatIsDesc: "DCA is an investment strategy where you buy more shares as the price drops to lower your average cost. This allows you to recover losses faster and transition to profit sooner when the price rebounds. However, undisciplined buying can lead to overexposure, so precise calculation is essential.",
+        featureTitle: "Key Features of Stock Pro",
+        feat1: "Target Price Reverse Calc: Answer the question 'How many shares do I need to buy to lower my average to $150?' with clarity.",
+        feat2: "Dual Currency Support: Essential for global investors, it calculates total investment in KRW based on real-time exchange rates.",
+        feat3: "Visual Risk Analysis: Provides visual charts showing the gap between current price and your average for better situational awareness.",
+        adviceTitle: "Investment Advice & Cautions",
+        adviceDesc: "While buying the dip is powerful, be cautious with companies whose fundamentals are compromised. Before buying more, always re-verify earnings, financial health, and market momentum. Ensure no single stock becomes too large a portion of your overall portfolio.",
+        disclaimerTitle: "⚠️ Disclaimer",
+        disclaimerDesc: "The calculation results and data provided are for reference only. We do not guarantee accuracy or completeness. Results may vary based on exchange rate fluctuations, brokerage fees, and market conditions. All investment decisions are your own responsibility."
     }
 };
 
