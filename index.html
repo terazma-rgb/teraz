@@ -39,7 +39,13 @@
                 <i class="fas fa-chart-pie"></i>
                 STOCK PRO
             </h1>
-            <p class="main-title">주식 물타기 & 목표 평단 계산기</p>
+            <div class="header-right-group">
+                <p class="main-title" data-i18n="mainTitle">주식 물타기 & 목표 평단 계산기</p>
+                <button id="lang-toggle" class="lang-btn" title="Switch Language">
+                    <span class="lang-text">EN</span>
+                    <i class="fas fa-globe"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -86,11 +92,11 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="us-stock">
                     <span class="fi fi-us"></span>
-                    미국주식 ($)
+                    <span data-i18n="tabUS">미국주식 ($)</span>
                 </button>
                 <button class="tab-btn" data-tab="kr-stock">
                     <span class="fi fi-kr"></span>
-                    한국주식 (₩)
+                    <span data-i18n="tabKR">한국주식 (₩)</span>
                 </button>
             </div>
 
@@ -100,41 +106,41 @@
                 <div class="input-grid">
                     <!-- 보유 주식 섹션 -->
                     <div class="section-group">
-                        <h3><i class="fas fa-wallet"></i> 현재 보유 자산</h3>
+                        <h3><i class="fas fa-wallet"></i> <span data-i18n="secCurrent">현재 보유 자산</span></h3>
                         <div class="input-group">
-                            <label>보유 수량</label>
+                            <label data-i18n="lblShares">보유 수량</label>
                             <input type="number" id="current-shares" placeholder="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label>평균 단가</label>
+                            <label data-i18n="lblAvgPrice">평균 단가</label>
                             <input type="number" id="current-price" placeholder="0" step="0.01">
                         </div>
                         <div class="input-group">
-                            <label>현재 시장가</label>
+                            <label data-i18n="lblMarketPrice">현재 시장가</label>
                             <input type="number" id="market-price" placeholder="0" step="0.01">
                         </div>
                     </div>
 
                     <!-- 추가 매수 섹션 -->
                     <div class="section-group">
-                        <h3><i class="fas fa-cart-plus"></i> 추가 매수 계획</h3>
+                        <h3><i class="fas fa-cart-plus"></i> <span data-i18n="secAdd">추가 매수 계획</span></h3>
                         
                         <!-- 탭형 서브 메뉴: 직접 입력 vs 역계산 -->
                         <div class="calc-mode-tabs">
-                            <button class="mode-btn active" onclick="setCalcMode('manual')">수량 직접 입력</button>
-                            <button class="mode-btn" onclick="setCalcMode('target')">목표 평단 역계산</button>
+                            <button class="mode-btn active" onclick="setCalcMode('manual')" data-i18n="modeManual">수량 직접 입력</button>
+                            <button class="mode-btn" onclick="setCalcMode('target')" data-i18n="modeTarget">목표 평단 역계산</button>
                         </div>
 
                         <div id="mode-manual" class="mode-content active">
                             <div class="input-group">
-                                <label>추가 매수 수량</label>
+                                <label data-i18n="lblAddShares">추가 매수 수량</label>
                                 <input type="number" id="additional-shares" placeholder="0" step="1">
                             </div>
                             <div class="input-group">
-                                <label>매수 희망가</label>
+                                <label data-i18n="lblBuyPrice">매수 희망가</label>
                                 <input type="number" id="additional-price" placeholder="0" step="0.01">
                                 <div class="quick-price-buttons">
-                                    <button type="button" class="q-btn" onclick="applyQuickPrice('additional-price', 0)">현재가</button>
+                                    <button type="button" class="q-btn" onclick="applyQuickPrice('additional-price', 0)" data-i18n="btnCurrent">현재가</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('additional-price', -0.05)">-5%</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('additional-price', -0.10)">-10%</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('additional-price', -0.20)">-20%</button>
@@ -144,20 +150,20 @@
 
                         <div id="mode-target" class="mode-content">
                             <div class="input-group highlight">
-                                <label>목표 평균 단가</label>
+                                <label data-i18n="lblTargetAvg">목표 평균 단가</label>
                                 <input type="number" id="target-avg-price" placeholder="희망하는 평단가 입력" step="0.01">
                             </div>
                             <div class="input-group">
-                                <label>매수 희망가 (선택)</label>
+                                <label data-i18n="lblTargetBuy">매수 희망가 (선택)</label>
                                 <input type="number" id="target-buy-price" placeholder="미입력 시 현재 시가 적용" step="0.01">
                                 <div class="quick-price-buttons">
-                                    <button type="button" class="q-btn" onclick="applyQuickPrice('target-buy-price', 0)">현재가</button>
+                                    <button type="button" class="q-btn" onclick="applyQuickPrice('target-buy-price', 0)" data-i18n="btnCurrent">현재가</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('target-buy-price', -0.05)">-5%</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('target-buy-price', -0.10)">-10%</button>
                                     <button type="button" class="q-btn" onclick="applyQuickPrice('target-buy-price', -0.20)">-20%</button>
                                 </div>
                             </div>
-                            <p class="help-text">목표 평단을 맞추기 위해 필요한 주식 수를 계산합니다.</p>
+                            <p class="help-text" data-i18n="helpTarget">목표 평단을 맞추기 위해 필요한 주식 수를 계산합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -165,17 +171,17 @@
                 <!-- 고급 옵션 (환율 등) -->
                 <div class="advanced-options">
                     <div class="input-group" id="orig-rate-group" style="display: none;">
-                        <label>최초 매수 시 환율 (선택: 환차손익 계산용)</label>
+                        <label data-i18n="lblOrigRate">최초 매수 시 환율 (선택: 환차손익 계산용)</label>
                         <input type="number" id="original-exchange-rate" placeholder="미입력시 현재 환율 적용">
                     </div>
                 </div>
                 
                 <div class="action-buttons">
                     <button class="reset-btn" onclick="resetCalculator()">
-                        <i class="fas fa-undo"></i> 초기화
+                        <i class="fas fa-undo"></i> <span data-i18n="btnReset">초기화</span>
                     </button>
                     <button class="calculate-btn" onclick="calculate()">
-                        <i class="fas fa-calculator"></i> 분석 실행
+                        <i class="fas fa-calculator"></i> <span data-i18n="btnCalc">분석 실행</span>
                     </button>
                 </div>
             </div>
@@ -184,9 +190,9 @@
         <!-- 결과 대시보드 -->
         <div class="results-section" id="results" style="display: none;">
             <div class="results-toolbar">
-                <h2><i class="fas fa-poll"></i> 투자 분석 리포트</h2>
+                <h2><i class="fas fa-poll"></i> <span data-i18n="resTitle">투자 분석 리포트</span></h2>
                 <button class="save-btn" onclick="saveAsImage()">
-                    <i class="fas fa-download"></i> 이미지 저장
+                    <i class="fas fa-download"></i> <span data-i18n="btnSave">이미지 저장</span>
                 </button>
             </div>
 
@@ -197,10 +203,9 @@
                         <i class="fas fa-bullseye"></i>
                     </div>
                     <div class="action-info">
-                        <p class="action-label">목표 달성 실행 계획</p>
-                        <h2 class="action-title">
-                            목표 평단 <span id="target-price-val"></span> 달성을 위해<br>
-                            <span class="action-highlight"><span id="target-shares-val">0</span>주</span>를 더 매수해야 합니다.
+                        <p class="action-label" data-i18n="resPlanLabel">목표 달성 실행 계획</p>
+                        <h2 class="action-title" id="action-title-text">
+                            <!-- Dynamic Content -->
                         </h2>
                     </div>
                 </div>
@@ -208,7 +213,7 @@
                 <!-- 1. 핵심 요약 카드 -->
                 <div class="insight-banner">
                     <div class="insight-item">
-                        <span class="insight-label">평단가 변화</span>
+                        <span class="insight-label" data-i18n="resAvgChange">평단가 변화</span>
                         <div class="insight-value-group">
                             <span class="old-value" id="res-old-avg">-</span>
                             <i class="fas fa-arrow-right"></i>
@@ -217,7 +222,7 @@
                         <span class="insight-change badge" id="res-avg-change">-</span>
                     </div>
                     <div class="insight-item">
-                        <span class="insight-label">필요 투자금</span>
+                        <span class="insight-label" data-i18n="resReqCost">필요 투자금</span>
                         <span class="main-value" id="res-required-cost">-</span>
                         <span class="sub-value" id="res-required-cost-krw" style="display:none">-</span>
                     </div>
@@ -226,13 +231,13 @@
                 <!-- 2. 차트 영역 -->
                 <div class="charts-container">
                     <div class="chart-box">
-                        <h4><i class="fas fa-chart-pie"></i> 포트폴리오 비중</h4>
+                        <h4 data-i18n="chartWeight"><i class="fas fa-chart-pie"></i> 포트폴리오 비중</h4>
                         <div class="chart-wrapper">
                             <canvas id="weightChart"></canvas>
                         </div>
                     </div>
                     <div class="chart-box">
-                        <h4><i class="fas fa-ruler-vertical"></i> 평단가 위치 분석</h4>
+                        <h4 data-i18n="chartPosition"><i class="fas fa-ruler-vertical"></i> 평단가 위치 분석</h4>
                         <div class="chart-wrapper">
                             <canvas id="positionChart"></canvas>
                         </div>
@@ -242,33 +247,33 @@
                 <!-- 3. 상세 데이터 그리드 -->
                 <div class="data-grid">
                     <div class="data-card">
-                        <div class="card-header">📊 물타기 효과</div>
+                        <div class="card-header" data-i18n="cardEffect">📊 물타기 효과</div>
                         <div class="row">
-                            <span>총 보유 수량</span>
+                            <span data-i18n="rowTotalShares">총 보유 수량</span>
                             <strong id="res-total-shares">-</strong>
                         </div>
                         <div class="row">
-                            <span>총 투자 원금</span>
+                            <span data-i18n="rowTotalInvest">총 투자 원금</span>
                             <strong id="res-total-invest">-</strong>
                         </div>
                         <div class="row" id="row-krw-total" style="display:none">
-                            <span>원화 환산 총액</span>
+                            <span data-i18n="rowTotalKRW">원화 환산 총액</span>
                             <strong id="res-total-invest-krw">-</strong>
                         </div>
                     </div>
 
                     <div class="data-card">
-                        <div class="card-header">🛡 리스크 & 목표</div>
+                        <div class="card-header" data-i18n="cardRisk">🛡 리스크 & 목표</div>
                         <div class="row">
-                            <span>현재 손익률</span>
+                            <span data-i18n="rowCurReturn">현재 손익률</span>
                             <strong id="res-current-return">-</strong>
                         </div>
                         <div class="row">
-                            <span>예상 손익률 (물타기 후)</span>
+                            <span data-i18n="rowNewReturn">예상 손익률 (물타기 후)</span>
                             <strong id="res-new-return">-</strong>
                         </div>
                         <div class="row">
-                            <span>원금 회복까지</span>
+                            <span data-i18n="rowRecovery">원금 회복까지</span>
                             <strong id="res-recovery-rate" class="highlight">-</strong>
                         </div>
                     </div>
@@ -276,8 +281,8 @@
 
                 <!-- 4. 시나리오 -->
                 <div class="scenario-box">
-                    <h4>💡 수익 시나리오</h4>
-                    <p id="scenario-text">주가가 이전 평단가 도달 시 ...</p>
+                    <h4 data-i18n="scenTitle">💡 수익 시나리오</h4>
+                    <p id="scenario-text">...</p>
                 </div>
                 
                 <div class="watermark">Stock Pro Calculator</div>

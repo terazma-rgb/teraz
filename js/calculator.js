@@ -4,12 +4,95 @@ let weightChartInstance = null;
 let positionChartInstance = null;
 let currentMode = 'manual'; // 'manual' or 'target'
 let currentTab = 'us-stock'; // 'us-stock' or 'kr-stock'
+let currentLang = 'ko'; // 'ko' or 'en'
+
+const langPack = {
+    ko: {
+        mainTitle: "주식 물타기 & 목표 평단 계산기",
+        tabUS: "미국주식 ($)",
+        tabKR: "한국주식 (₩)",
+        secCurrent: "현재 보유 자산",
+        lblShares: "보유 수량",
+        lblAvgPrice: "평균 단가",
+        lblMarketPrice: "현재 시장가",
+        secAdd: "추가 매수 계획",
+        modeManual: "수량 직접 입력",
+        modeTarget: "목표 평단 역계산",
+        lblAddShares: "추가 매수 수량",
+        lblBuyPrice: "매수 희망가",
+        btnCurrent: "현재가",
+        lblTargetAvg: "목표 평균 단가",
+        lblTargetBuy: "매수 희망가 (선택)",
+        helpTarget: "목표 평단을 맞추기 위해 필요한 주식 수를 계산합니다.",
+        lblOrigRate: "최초 매수 시 환율 (선택: 환차손익 계산용)",
+        btnReset: "초기화",
+        btnCalc: "분석 실행",
+        resTitle: "투자 분석 리포트",
+        btnSave: "이미지 저장",
+        resPlanLabel: "목표 달성 실행 계획",
+        resAvgChange: "평단가 변화",
+        resReqCost: "필요 투자금",
+        chartWeight: "포트폴리오 비중",
+        chartPosition: "평단가 위치 분석",
+        cardEffect: "📊 물타기 효과",
+        rowTotalShares: "총 보유 수량",
+        rowTotalInvest: "총 투자 원금",
+        rowTotalKRW: "원화 환산 총액",
+        cardRisk: "🛡 리스크 & 목표",
+        rowCurReturn: "현재 손익률",
+        rowNewReturn: "예상 손익률 (물타기 후)",
+        rowRecovery: "원금 회복까지",
+        scenTitle: "💡 수익 시나리오",
+        actionText: "목표 평단 <span id='target-price-val'>{0}</span> 달성을 위해<br><span class='action-highlight'>{1}에 {2}주</span>를<br>더 매수해야 합니다.",
+        scenText: "주가가 기존 평단가(<strong>{0}</strong>)까지 회복 시<br>예상 수익금: <strong style='color: #4ade80'>{1}</strong> (수익률 {2}%)"
+    },
+    en: {
+        mainTitle: "Stock Averaging Calculator",
+        tabUS: "US Stock ($)",
+        tabKR: "KR Stock (₩)",
+        secCurrent: "Current Holdings",
+        lblShares: "Shares Owned",
+        lblAvgPrice: "Avg Price",
+        lblMarketPrice: "Market Price",
+        secAdd: "Buying Plan",
+        modeManual: "Manual Input",
+        modeTarget: "Reverse Calc",
+        lblAddShares: "Shares to Buy",
+        lblBuyPrice: "Buy Price",
+        btnCurrent: "Market",
+        lblTargetAvg: "Target Avg Price",
+        lblTargetBuy: "Buy Price (Optional)",
+        helpTarget: "Calculates shares needed to reach your target average price.",
+        lblOrigRate: "Original Exchange Rate (Optional)",
+        btnReset: "Reset",
+        btnCalc: "Calculate",
+        resTitle: "Analysis Report",
+        btnSave: "Save Image",
+        resPlanLabel: "Action Plan",
+        resAvgChange: "Avg Price Change",
+        resReqCost: "Required Capital",
+        chartWeight: "Portfolio Weight",
+        chartPosition: "Price Position",
+        cardEffect: "📊 Effect",
+        rowTotalShares: "Total Shares",
+        rowTotalInvest: "Total Invested",
+        rowTotalKRW: "Total in KRW",
+        cardRisk: "🛡 Risk & Reward",
+        rowCurReturn: "Current P/L",
+        rowNewReturn: "Expected P/L",
+        rowRecovery: "Break-even at",
+        scenTitle: "💡 Scenario",
+        actionText: "To reach avg price <span id='target-price-val'>{0}</span>,<br>you need to buy <span class='action-highlight'>{2} shares at {1}</span>.",
+        scenText: "If price returns to old avg (<strong>{0}</strong>),<br>Expected Profit: <strong style='color: #4ade80'>{1}</strong> ({2}%)"
+    }
+};
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     setupTabs();
     setupInputs();
     loadSavedData(); // Load saved data on startup
+    setupLanguage(); // Setup language toggle
     
     // Refresh button listener
     document.getElementById('refresh-rate-btn').addEventListener('click', function() {
@@ -23,6 +106,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function setupLanguage() {
+    const toggleBtn = document.getElementById('lang-toggle');
+    const langText = toggleBtn.querySelector('.lang-text');
+    
+    toggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'ko' ? 'en' : 'ko';
+        langText.textContent = currentLang === 'ko' ? 'EN' : 'KR';
+        updateLanguage();
+        saveData();
+    });
+    
+    // Initial set from loaded data
+    langText.textContent = currentLang === 'ko' ? 'EN' : 'KR';
+    updateLanguage();
+}
+
+function updateLanguage() {
+    const pack = langPack[currentLang];
+    
+    // Update all elements with data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (pack[key]) {
+            el.textContent = pack[key];
+        }
+    });
+    
+    // Placeholders
+    if (currentLang === 'en') {
+        document.getElementById('current-shares').placeholder = "0";
+        document.getElementById('stock-name').placeholder = "Ticker (e.g. TSLA)";
+    } else {
+        document.getElementById('stock-name').placeholder = "종목명 (선택사항, 예: TSLA)";
+    }
+    
+    // Re-render scenario text if results are visible
+    if (document.getElementById('results').style.display === 'block') {
+        calculate(); // Recalculate to update dynamic text strings
+    }
+}
 
 function setupTabs() {
     // Currency Tabs
@@ -84,7 +208,8 @@ function saveData() {
         targetBuyPrice: document.getElementById('target-buy-price').value,
         originalExchangeRate: document.getElementById('original-exchange-rate').value,
         currentTab: currentTab,
-        currentMode: currentMode
+        currentMode: currentMode,
+        currentLang: currentLang
     };
     localStorage.setItem('stockProData', JSON.stringify(data));
 }
@@ -112,6 +237,10 @@ function loadSavedData() {
         
         if (data.currentMode) {
             setCalcMode(data.currentMode);
+        }
+
+        if (data.currentLang) {
+            currentLang = data.currentLang;
         }
     }
 }
@@ -253,6 +382,7 @@ function calculate() {
     const recoveryRate = ((avgPriceAfter - marketPrice) / marketPrice) * 100;
 
     // 4. Update UI
+    const pack = langPack[currentLang];
     
     // Target Action Card (Specific to Target Mode)
     const targetActionCard = document.getElementById('res-target-action');
@@ -260,13 +390,14 @@ function calculate() {
         const targetAvg = parseFloat(document.getElementById('target-avg-price').value) || 0;
         targetActionCard.style.display = 'flex';
         
-        // Update the HTML content directly for better formatting
-        const actionTitle = targetActionCard.querySelector('.action-title');
-        actionTitle.innerHTML = `
-            목표 평단 <span id="target-price-val">${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}</span> 달성을 위해<br>
-            <span class="action-highlight">${currency}${additionalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}에 ${additionalShares.toLocaleString()}주</span>를<br>
-            더 매수해야 합니다.
-        `;
+        // Use format string from langPack
+        // Format: {0}=TargetAvg, {1}=BuyPrice, {2}=Shares
+        const actionHtml = pack.actionText
+            .replace('{0}', `${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}`)
+            .replace('{1}', `${currency}${additionalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`)
+            .replace('{2}', `${additionalShares.toLocaleString()}`);
+            
+        targetActionCard.querySelector('.action-title').innerHTML = actionHtml;
     } else {
         targetActionCard.style.display = 'none';
     }
@@ -286,13 +417,13 @@ function calculate() {
         const requiredKrw = totalAdditionalCost * exchangeRate;
         const krwEl = document.getElementById('res-required-cost-krw');
         krwEl.style.display = 'block';
-        krwEl.textContent = `(약 ₩${Math.round(requiredKrw).toLocaleString()})`;
+        krwEl.textContent = `(≈ ₩${Math.round(requiredKrw).toLocaleString()})`;
     } else {
         document.getElementById('res-required-cost-krw').style.display = 'none';
     }
 
     // Data Grid
-    document.getElementById('res-total-shares').textContent = `${totalSharesAfter.toLocaleString()}주`;
+    document.getElementById('res-total-shares').textContent = `${totalSharesAfter.toLocaleString()}`;
     document.getElementById('res-total-invest').textContent = `${currency}${totalCostAfter.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
     
     if (isUS) {
@@ -318,11 +449,13 @@ function calculate() {
 
     // Scenario
     const profitAtOldAvg = (currentPrice * totalSharesAfter) - totalCostAfter;
-    document.getElementById('scenario-text').innerHTML = `
-        주가가 기존 평단가(<strong>${currency}${currentPrice.toFixed(2)}</strong>)까지 회복 시<br>
-        예상 수익금: <strong style="color: #4ade80">${currency}${profitAtOldAvg.toLocaleString(undefined, {maximumFractionDigits: 2})}</strong> 
-        (수익률 ${(profitAtOldAvg/totalCostAfter*100).toFixed(2)}%)
-    `;
+    // Format: {0}=OldAvg, {1}=ProfitAmount, {2}=Profit%
+    const scenHtml = pack.scenText
+        .replace('{0}', `${currency}${currentPrice.toFixed(2)}`)
+        .replace('{1}', `${currency}${profitAtOldAvg.toLocaleString(undefined, {maximumFractionDigits: 2})}`)
+        .replace('{2}', `${(profitAtOldAvg/totalCostAfter*100).toFixed(2)}`);
+        
+    document.getElementById('scenario-text').innerHTML = scenHtml;
 
     // Show Results
     document.getElementById('results').style.display = 'block';
