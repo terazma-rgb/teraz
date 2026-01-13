@@ -119,18 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupInputs();
     loadSavedData(); // Load saved data on startup
     setupLanguage(); // Setup language toggle
-    
-    // Refresh button listener
-    document.getElementById('refresh-rate-btn').addEventListener('click', function() {
-        const icon = this.querySelector('i');
-        icon.classList.add('fa-spin');
-        // Call the fetch function from dashboard.js
-        if (typeof fetchExchangeRate === 'function') {
-            fetchExchangeRate().then(() => {
-                setTimeout(() => icon.classList.remove('fa-spin'), 1000);
-            });
-        }
-    });
 });
 
 function setupLanguage() {
@@ -297,11 +285,7 @@ function applyQuickPrice(targetId, dropPercent) {
 }
 
 function getExchangeRate() {
-    const rateText = document.getElementById('usd-krw-rate').textContent;
-    if (rateText && !rateText.includes('loading') && !rateText.includes('실패')) {
-        return parseFloat(rateText.replace(/,/g, '').replace(/[^\d.]/g, '')) || 1;
-    }
-    return 1; // Default to 1 if failed or KRW
+    return window.currentExchangeRate || 1;
 }
 
 function calculate() {
