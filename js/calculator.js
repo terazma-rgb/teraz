@@ -44,6 +44,7 @@ const langPack = {
         rowRecovery: "원금 회복까지",
         scenTitle: "💡 수익 시나리오",
         actionText: "목표 평단 <span id='target-price-val'>{0}</span> 달성을 위해<br><span class='action-highlight'>{1}에 {2}주</span>를<br>더 매수해야 합니다.",
+        actionTextManual: "현재가 {0}에 {1}주를 추가 매수하면<br>평단가는 <span class='action-highlight'>{2}</span>가 됩니다.",
         scenText: "주가가 기존 평단가(<strong>{0}</strong>)까지 회복 시<br>예상 수익금: <strong style='color: #4ade80'>{1}</strong> (수익률 {2}%)",
         // Guide Section
         guideTitle: "📈 주식 물타기 계산기 100% 활용 가이드",
@@ -97,6 +98,7 @@ const langPack = {
         rowRecovery: "Break-even at",
         scenTitle: "💡 Scenario",
         actionText: "To reach avg price <span id='target-price-val'>{0}</span>,<br>you need to buy <span class='action-highlight'>{2} shares at {1}</span>.",
+        actionTextManual: "Buying {1} shares at {0}<br>will lower your avg to <span class='action-highlight'>{2}</span>.",
         scenText: "If price returns to old avg (<strong>{0}</strong>),<br>Expected Profit: <strong style='color: #4ade80'>{1}</strong> ({2}%)",
         // Guide Section
         guideTitle: "📈 Guide to Stock Averaging (DCA)",
@@ -396,23 +398,28 @@ function calculate() {
     // 4. Update UI
     const pack = langPack[currentLang];
     
-    // Target Action Card (Specific to Target Mode)
+    // Action Card Logic
     const targetActionCard = document.getElementById('res-target-action');
+    targetActionCard.style.display = 'flex'; // Always show now
+    
+    let actionHtml = '';
+    
     if (currentMode === 'target') {
         const targetAvg = parseFloat(document.getElementById('target-avg-price').value) || 0;
-        targetActionCard.style.display = 'flex';
-        
-        // Use format string from langPack
         // Format: {0}=TargetAvg, {1}=BuyPrice, {2}=Shares
-        const actionHtml = pack.actionText
+        actionHtml = pack.actionText
             .replace('{0}', `${currency}${targetAvg.toLocaleString(undefined, {minimumFractionDigits: 2})}`)
             .replace('{1}', `${currency}${additionalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`)
             .replace('{2}', `${additionalShares.toLocaleString()}`);
-            
-        targetActionCard.querySelector('.action-title').innerHTML = actionHtml;
     } else {
-        targetActionCard.style.display = 'none';
+        // Manual Mode Format: {0}=BuyPrice, {1}=Shares, {2}=NewAvg
+        actionHtml = pack.actionTextManual
+            .replace('{0}', `${currency}${additionalPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`)
+            .replace('{1}', `${additionalShares.toLocaleString()}`)
+            .replace('{2}', `${currency}${avgPriceAfter.toLocaleString(undefined, {minimumFractionDigits: 2})}`);
     }
+    
+    targetActionCard.querySelector('.action-title').innerHTML = actionHtml;
 
     // Banner
     document.getElementById('res-old-avg').textContent = `${currency}${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;

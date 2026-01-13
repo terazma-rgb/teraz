@@ -89,26 +89,39 @@ body::before {
     color: var(--accent-color);
 }
 
-.main-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #f8fafc 0%, #38bdf8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 0.2rem;
-    display: block;
+/* Language Toggle Button */
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-@media (min-width: 768px) {
-    .main-title {
-        font-size: 1.5rem;
-        margin-left: 1.5rem;
-        margin-top: 0;
-    }
-    .header-content {
-        justify-content: space-between;
-    }
+.lang-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lang-btn:hover {
+    background: var(--accent-color);
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(56, 189, 248, 0.3);
+}
+
+.lang-text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Exchange Rate Display */
