@@ -821,27 +821,32 @@ input:checked + .slider:before {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 .share-icon-btn:hover {
     transform: translateY(-3px);
-    color: white;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 
-/* Share Brand Colors */
-.share-icon-btn.x-share:hover { background: #000; border-color: #333; }
-.share-icon-btn.fb-share:hover { background: #1877f2; border-color: #1877f2; }
-.share-icon-btn.native-share:hover { background: var(--accent-color); border-color: var(--accent-color); color: #0f172a; }
-.share-icon-btn.link-share:hover { background: var(--success-color); border-color: var(--success-color); color: #0f172a; }
+/* Share Brand Colors (Always Colorful) */
+.share-icon-btn.x-share { background: #000; border-color: #333; }
+.share-icon-btn.fb-share { background: #1877f2; border-color: #1877f2; }
+/* Native Share: Yellow/Green Gradient to imply Kakao/Message */
+.share-icon-btn.native-share { 
+    background: linear-gradient(135deg, #FEE500 0%, #4ade80 100%);
+    border-color: #FEE500;
+    color: #3f3f3f; /* Dark icon for contrast on yellow */
+}
+.share-icon-btn.link-share { background: #10b981; border-color: #10b981; }
 
 /* Hide Native Share by default (toggled by JS) */
 .native-share {
