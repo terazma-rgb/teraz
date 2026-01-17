@@ -67,8 +67,8 @@ const langPack = {
     },
     en: {
         mainTitle: "Stock Averaging Calculator",
-        heroTitle: "Smart DCA Strategy with<br class='mobile-br'> <span class='highlight-text'>Stock Pro</span>",
-        heroDesc: "How much can you lower your average price?<br> Plan your exit with target price reverse calculation<br class='mobile-br'> and portfolio analysis.",
+        heroTitle: "Smart Stock Averaging",
+        heroDesc: "Lower your average cost basis.<br>Plan your exit strategy with precision.",
         tabUS: "US Stock ($)",
         tabKR: "KR Stock (₩)",
         secCurrent: "Current Holdings",
@@ -224,6 +224,13 @@ function setupLanguage() {
 function updateLanguage() {
     const pack = langPack[currentLang];
     
+    // Add/remove class for language-specific styling
+    if (currentLang === 'en') {
+        document.body.classList.add('lang-en');
+    } else {
+        document.body.classList.remove('lang-en');
+    }
+
     // Update all elements with data-i18n
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
