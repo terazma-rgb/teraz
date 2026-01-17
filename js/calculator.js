@@ -10,7 +10,7 @@ const langPack = {
     ko: {
         mainTitle: "주식 물타기 & 목표 평단 계산기",
         heroTitle: "스마트한 투자자를 위한<br class='mobile-br'> <span class='highlight-text'>물타기 계산기</span>",
-        heroDesc: "평단가를 얼마나 낮출 수 있을까요?<br class='web-br'> 목표 평단 역계산과 포트폴리오 분석으로<br class='mobile-br'> 탈출 계획을 세워보세요.",
+        heroDesc: "평단가를 얼마나 낮출 수 있을까요?<br> 목표 평단 역계산과 포트폴리오 분석으로<br class='mobile-br'> 탈출 계획을 세워보세요.",
         tabUS: "미국주식 ($)",
         tabKR: "한국주식 (₩)",
         secCurrent: "현재 보유 자산",
@@ -68,7 +68,7 @@ const langPack = {
     en: {
         mainTitle: "Stock Averaging Calculator",
         heroTitle: "Smart DCA Strategy with<br class='mobile-br'> <span class='highlight-text'>Stock Pro</span>",
-        heroDesc: "How much can you lower your average price?<br class='web-br'> Plan your exit with target price reverse calculation<br class='mobile-br'> and portfolio analysis.",
+        heroDesc: "How much can you lower your average price?<br> Plan your exit with target price reverse calculation<br class='mobile-br'> and portfolio analysis.",
         tabUS: "US Stock ($)",
         tabKR: "KR Stock (₩)",
         secCurrent: "Current Holdings",
