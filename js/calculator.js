@@ -204,14 +204,28 @@ function updateCurrencyLabels() {
     }
 }
 
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 function setupInputs() {
     // Auto-calculate on Enter key and Save on input
     const inputs = document.querySelectorAll('input');
+    const debouncedSave = debounce(saveData, 500);
+
     inputs.forEach(input => {
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') calculate();
         });
-        input.addEventListener('input', saveData);
+        input.addEventListener('input', debouncedSave);
     });
 }
 
