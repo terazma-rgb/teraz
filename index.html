@@ -364,6 +364,27 @@
                 
                 <div class="watermark">Stock Pro Calculator</div>
             </div>
+
+            <!-- Viral Share Section -->
+            <div class="share-container">
+                <p class="share-title" data-i18n="shareTitle">이 계산기가 유용했다면 공유해보세요!</p>
+                <div class="share-buttons">
+                    <!-- Native Share (Mobile) -->
+                    <button class="share-icon-btn native-share" onclick="shareNative()" title="Share">
+                        <i class="fas fa-share-nodes"></i>
+                    </button>
+                    <!-- Desktop/Fallback -->
+                    <button class="share-icon-btn x-share" onclick="shareToX()" title="Share on X">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </button>
+                    <button class="share-icon-btn fb-share" onclick="shareToFB()" title="Share on Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </button>
+                    <button class="share-icon-btn link-share" onclick="copyLink()" title="Copy Link">
+                        <i class="fas fa-link"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- SEO 및 콘텐츠 가이드 섹션 (애드센스 최적화) -->

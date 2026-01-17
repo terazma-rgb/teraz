@@ -59,7 +59,9 @@ const langPack = {
         adviceDesc: "분할 매수는 하락장에서 강력한 무기가 될 수 있지만, 펀더멘털이 훼손된 기업에 대해서는 신중해야 합니다. 추가 매수 전에 반드시 해당 기업의 실적, 재무 건전성, 그리고 시장의 모멘텀을 다시 한번 확인하시기 바랍니다. 또한, 전체 포트폴리오에서 특정 종목의 비중이 과도하게 커지지 않도록 리스크 관리에 만전을 기하십시오.",
         disclaimerTitle: "⚠️ 면책 조항 (Disclaimer)",
         disclaimerDesc: "본 서비스가 제공하는 계산 결과와 데이터는 투자 참고용이며, 그 정확성이나 완전성을 보장하지 않습니다. 환율 변동, 증권사 수수료 정책, 시장 상황 등에 따라 실제 결과와 차이가 발생할 수 있습니다. 모든 투자의 최종 책임은 투자자 본인에게 있으며, Stock Pro는 본 도구 사용으로 인한 어떠한 손실에 대해서도 책임을 지지 않습니다.",
-        privacyPolicy: "개인정보처리방침"
+        privacyPolicy: "개인정보처리방침",
+        shareTitle: "이 계산기가 유용했다면 공유해보세요!",
+        shareSuccess: "링크가 복사되었습니다!"
     },
     en: {
         mainTitle: "Stock Averaging Calculator",
@@ -113,7 +115,9 @@ const langPack = {
         adviceDesc: "While buying the dip is powerful, be cautious with companies whose fundamentals are compromised. Before buying more, always re-verify earnings, financial health, and market momentum. Ensure no single stock becomes too large a portion of your overall portfolio.",
         disclaimerTitle: "⚠️ Disclaimer",
         disclaimerDesc: "The calculation results and data provided are for reference only. We do not guarantee accuracy or completeness. Results may vary based on exchange rate fluctuations, brokerage fees, and market conditions. All investment decisions are your own responsibility.",
-        privacyPolicy: "Privacy Policy"
+        privacyPolicy: "Privacy Policy",
+        shareTitle: "Share this tool if you found it useful!",
+        shareSuccess: "Link copied to clipboard!"
     }
 };
 
@@ -123,7 +127,79 @@ document.addEventListener('DOMContentLoaded', function() {
     setupInputs();
     loadSavedData(); // Load saved data on startup
     setupLanguage(); // Setup language toggle
+    checkShareSupport(); // Check native share support
 });
+
+function checkShareSupport() {
+    const nativeBtn = document.querySelector('.native-share');
+    if (navigator.share) {
+        // Supported: Show native, hide others if you want strict mode, 
+        // but keeping others is fine for desktop users who might see the icon.
+        // Actually, let's keep all for visibility, but native btn acts as primary on mobile.
+        nativeBtn.style.display = 'flex';
+    } else {
+        nativeBtn.style.display = 'none'; // Hide on desktop/unsupported
+    }
+}
+
+// ... (Rest of existing functions: setupLanguage, updateLanguage, setupTabs, setCalcMode, updateCurrencyLabels, debounce, setupInputs, saveData, loadSavedData, applyQuickPrice, getExchangeRate, calculate, setReturnColor, renderCharts, resetCalculator, saveAsImage) ...
+
+// --- Share Functions ---
+function getShareUrl() {
+    return window.location.href; // Or 'https://teraz.pages.dev' explicitly
+}
+
+function getShareText() {
+    return currentLang === 'ko' 
+        ? "주식 물타기 계산기 & 목표 평단 분석 도구 - Stock Pro"
+        : "Stock Averaging Calculator & Target Price Analyzer - Stock Pro";
+}
+
+async function shareNative() {
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: 'Stock Pro',
+                text: getShareText(),
+                url: getShareUrl()
+            });
+        } catch (err) {
+            console.log('Share canceled');
+        }
+    } else {
+        copyLink(); // Fallback
+    }
+}
+
+function shareToX() {
+    const text = encodeURIComponent(getShareText());
+    const url = encodeURIComponent(getShareUrl());
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+}
+
+function shareToFB() {
+    const url = encodeURIComponent(getShareUrl());
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(getShareUrl()).then(() => {
+        const btn = document.querySelector('.link-share');
+        const originalIcon = btn.innerHTML;
+        
+        // Show success state
+        btn.innerHTML = '<i class="fas fa-check" style="color:#4ade80"></i>';
+        
+        // Simple toast or alert? Let's stick to button feedback for minimalism
+        // Or alert if simpler
+        // alert(langPack[currentLang].shareSuccess);
+        
+        setTimeout(() => {
+            btn.innerHTML = originalIcon;
+        }, 2000);
+    });
+}
+
 
 function setupLanguage() {
     const toggleBtn = document.getElementById('lang-toggle');

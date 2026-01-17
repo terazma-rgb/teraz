@@ -796,6 +796,58 @@ input:checked + .slider:before {
     text-transform: uppercase;
 }
 
+/* Viral Share Section */
+.share-container {
+    margin-top: 2rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.share-title {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-icon-btn:hover {
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* Share Brand Colors */
+.share-icon-btn.x-share:hover { background: #000; border-color: #333; }
+.share-icon-btn.fb-share:hover { background: #1877f2; border-color: #1877f2; }
+.share-icon-btn.native-share:hover { background: var(--accent-color); border-color: var(--accent-color); color: #0f172a; }
+.share-icon-btn.link-share:hover { background: var(--success-color); border-color: var(--success-color); color: #0f172a; }
+
+/* Hide Native Share by default (toggled by JS) */
+.native-share {
+    display: none;
+}
+
 /* Footer */
 .footer {
     text-align: center;
