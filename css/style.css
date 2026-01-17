@@ -940,6 +940,7 @@ input:checked + .slider:before {
     
     .logo {
         font-size: 1.3rem;
+        margin-left: -10px; /* Nudge left for visual balance */
     }
 
     .main-title {

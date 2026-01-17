@@ -67,7 +67,7 @@ const langPack = {
     },
     en: {
         mainTitle: "Stock Averaging Calculator",
-        heroTitle: "Smart Stock Averaging",
+        heroTitle: "Smart <span class='highlight-text'>Stock Averaging</span>",
         heroDesc: "Lower your average cost basis.<br>Plan your exit strategy with precision.",
         tabUS: "US Stock ($)",
         tabKR: "KR Stock (₩)",
