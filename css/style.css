@@ -124,6 +124,13 @@ body::before {
     letter-spacing: 1px;
 }
 
+.main-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 /* Exchange Rate Display */
 /* Moved to Settings Bar section */
 
