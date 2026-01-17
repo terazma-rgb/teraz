@@ -19,11 +19,68 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="미국주식 및 한국주식 물타기 계산기 (Stock Averaging Calculator). 목표 평단가 역계산, 수익률 시뮬레이션, 실시간 환율을 적용한 원화 환산까지 지원하는 전문 투자자용 도구입니다.">
-    <meta name="keywords" content="물타기 계산기, 주식 평단가 계산기, 주식 물타기, 평단가 수정, 미국주식 환율, 스톡 캘큘레이터, 주식 수익률 계산">
+    <meta name="description" content="주식 물타기 계산기(Stock Averaging Calculator)로 평단가를 낮추는 데 필요한 주식 수를 계산하세요. 목표 평단가 역계산, 미국 주식 환율 자동 적용, 포트폴리오 비중 분석 기능을 제공합니다.">
+    <meta name="keywords" content="물타기 계산기, 주식 평단가 계산기, 주식 물타기, 평단가 수정, 미국주식 환율, 스톡 캘큘레이터, 주식 수익률 계산, DCA 계산기">
     <meta name="author" content="Stock Pro">
     <meta name="google-site-verification" content="L_l56888_prTpuO_oSCrZ-d7t6E1VAHt_JArm0InAp8" />
     <meta name="naver-site-verification" content="fdac7763e723daac7569f681fab0364341686f64" />
+    
+    <!-- GEO & SEO: Structured Data for Generative AI -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Stock Pro 물타기 계산기",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+          },
+          "description": "주식 추가 매수(물타기) 시 변화하는 평균 단가를 계산하고, 목표 평단가를 맞추기 위해 필요한 주식 수를 역으로 산출해주는 도구입니다.",
+          "featureList": [
+            "주식 평단가 계산 (DCA)",
+            "목표 평단가 역계산",
+            "미국 주식 실시간 환율 적용",
+            "포트폴리오 비중 시각화",
+            "계산 결과 이미지 저장"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "물타기(DCA)란 무엇인가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "주가가 하락했을 때 추가 매수를 통해 평균 단가를 낮추는 투자 전략입니다. 이를 통해 향후 주가가 반등할 때 손실을 더 빠르게 만회하고, 수익 전환 시점을 앞당길 수 있습니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "목표 평단가 계산은 어떻게 하나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Stock Pro 계산기의 '목표 평단 역계산' 기능을 사용하세요. 원하는 목표 평단가와 매수 희망가를 입력하면, 목표를 달성하기 위해 몇 주를 추가로 매수해야 하는지 자동으로 계산해줍니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "미국 주식 물타기 계산 시 환율은 어떻게 적용되나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "본 계산기는 실시간 환율 정보를 자동으로 불러와 적용합니다. 또한 '최초 매수 시 환율'을 입력하여 환차손익까지 고려한 정확한 원화 투자 규모를 파악할 수 있습니다."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <title>Stock Pro - 주식 물타기 계산기 & 목표 평단 분석</title>
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 
