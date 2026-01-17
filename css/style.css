@@ -216,6 +216,10 @@ body::before {
     display: none;
 }
 
+.web-br {
+    display: block;
+}
+
 .hero-desc {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -937,6 +941,10 @@ input:checked + .slider:before {
 
     .mobile-br {
         display: block;
+    }
+
+    .web-br {
+        display: none;
     }
     
     .hero-desc {
